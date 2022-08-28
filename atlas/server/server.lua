@@ -1,6 +1,5 @@
 local luv = (luv or require "luv")
 
-local atlas_config = require "atlas.config"
 local logging = require "atlas.logging"
 local Parser = require "atlas.server.http_11_parser"
 local ParserErrors = require "atlas.server.parser_errors"
@@ -140,8 +139,7 @@ end
 
 -- Configure the server to listen for connections.
 function Server._listen(self)
-  local status, err = self._server:listen(atlas_config.backlog_connections,
-                                          self:_make_listen_callback())
+  local status, err = self._server:listen(128, self:_make_listen_callback())
   if status ~= 0 then
     logger.log("Failed to listen to incoming connections")
     logger.log(err)

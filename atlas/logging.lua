@@ -1,7 +1,8 @@
 local luv = (luv or require "luv")
 
-local config = require "atlas.config"
 local fs = require "atlas.fs"
+
+local log_file_fd = 1 -- stdout
 
 local logging = {}
 
@@ -26,9 +27,9 @@ function logging.get_logger(logger)
     end
 
     if luv.loop_alive() then
-      fs.write(config.log_file_fd, log_line)
+      fs.write(log_file_fd, log_line)
     else
-      luv.fs_write(config.log_file_fd, log_line)
+      luv.fs_write(log_file_fd, log_line)
     end
   end
 
